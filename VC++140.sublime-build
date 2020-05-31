@@ -1,0 +1,22 @@
+{
+    "cmd": ["vcvarsall.bat", "&&", "cl", "/nologo", "/EHsc", "/Za", "${file}"],
+    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+    "working_dir": "${file_path}",
+    "selector": "source.c, source.cpp, source.c++",
+
+    "shell": true, // Without this sublime has hard times to parse "&" in out command line
+    "variants":
+    [
+        {
+        	// for console programs that don't require input, otherwise it might run hidden
+            "name": "Run in output window",
+            "cmd": ["vcvarsall.bat", "&&", "cl", "/nologo", "/EHsc", "/Za", "${file}", "&&", "${file_path}/${file_base_name}.exe"]
+        },
+        {
+        	// recommended 
+            "name": "Run in external window", 
+            "shell": true,
+            "cmd": ["vcvarsall.bat", "&&", "cl", "/nologo", "/EHsc", "/Za", "${file}", "&&", "start","cmd", "/c", "${file_path}/${file_base_name}.exe && pause"]
+        }
+    ]
+}
